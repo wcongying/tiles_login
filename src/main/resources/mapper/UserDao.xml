@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nicole.tileslogin.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="com.nicole.tileslogin.entity.User">
+        <!--@Table user-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" jdbcType="INTEGER"/>
+        <result property="updatedAt" column="updated_at" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="loginAt" column="login_at" jdbcType="INTEGER"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--查询单个用用户名-->
+    <select id="queryByUsername" resultMap="BaseResultMap">
+        select
+            id, created_at, updated_at, username, password, login_at, salt
+        from tiles_login.user
+        where username = #{username}
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, created_at, updated_at, username, password, login_at, salt
+        from tiles_login.user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, created_at, updated_at, username, password, login_at, salt
+        from tiles_login.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, created_at, updated_at, username, password, login_at, salt
+        from tiles_login.user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="loginAt != null">
+                and login_at = #{loginAt}
+            </if>
+            <if test="salt != null and salt != ''">
+                and salt = #{salt}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into tiles_login.user(created_at, updated_at, username, password, login_at, salt)
+        values (#{createdAt}, #{updatedAt}, #{username}, #{password}, #{loginAt}, #{salt})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tiles_login.user
+        <set>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="loginAt != null">
+                login_at = #{loginAt},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tiles_login.user where id = #{id}
+    </delete>
+
+</mapper>

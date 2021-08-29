@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 2021-08-15 15:40:58
  */
 @Controller
-@RequestMapping("/profession")
+@RequestMapping("/u/profession")
 public class ProfessionController {
     /**
      * 服务对象

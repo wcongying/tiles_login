@@ -43,4 +43,17 @@
     </bean>
     <!-- tiles整合 end-->
 
+    <!-- 配置拦截器 -->
+    <mvc:interceptors>
+        <!-- 多个拦截器，按顺序执行 -->
+        <mvc:interceptor>
+            <!--<mvc:mapping path="/**"/> 拦截所有的url包括子url路径 -->
+            <mvc:mapping path="/u/**"/><!-- 拦截/u/开头的所有url -->
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+            <bean class="com.nicole.tileslogin.util.InterceptUtil"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
