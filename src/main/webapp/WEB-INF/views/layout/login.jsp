@@ -10,7 +10,7 @@
 <body>
 <c:set value="${pageContext.request.contextPath}" var="path" scope="page"/>
 <div align="center">
-    <form action="${path}/login" method="post">
+    <form action="${path}/login" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <table>
             <tr>
                 <td>username</td>

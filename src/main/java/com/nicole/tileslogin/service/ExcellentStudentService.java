@@ -13,6 +13,13 @@ import java.util.List;
  */
 @Service
 public interface ExcellentStudentService {
+    /**
+     * 通过ID查询单条数据带redis
+     *
+     * @param id 主键
+     * @return 实例对象
+     */
+    ExcellentStudent queryByIdRedis(Long id) ;
 
     /**
      * 通过ID查询单条数据

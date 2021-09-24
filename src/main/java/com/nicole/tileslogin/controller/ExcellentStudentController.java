@@ -1,6 +1,7 @@
 package com.nicole.tileslogin.controller;
 
 import com.nicole.tileslogin.entity.ExcellentStudent;
+import com.nicole.tileslogin.rest.Restful;
 import com.nicole.tileslogin.service.ExcellentStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,33 @@ public class ExcellentStudentController {
     @Autowired
     private ExcellentStudentService excellentStudentService;
 
-    @RequestMapping(value = "/salaryDesc", method = RequestMethod.GET)
+    @RequestMapping(value = "/idjsonredis", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> excellentStudentIDJsonRedis(){
+        long id = 1L;
+        ExcellentStudent excellentStudent = excellentStudentService.queryByIdRedis( id );
+        if (null != excellentStudent) {
+            return Restful.set(400, "find exc stu successfully",excellentStudent );
+        } else {
+            return Restful.set(200, "find exc stu error", excellentStudent);
+        }
+
+    }
+
+    @RequestMapping(value = "/idbyjson", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> excellentStudentIDJson(){
+        long id = 1L;
+        ExcellentStudent excellentStudent = excellentStudentService.queryById( id );
+        if (null != excellentStudent) {
+            return Restful.set(400, "find exc stu successfully",excellentStudent );
+        } else {
+            return Restful.set(200, "find exc stu error", excellentStudent);
+        }
+
+    }
+
+    @RequestMapping(value = "/salarydescredis", method = RequestMethod.GET)
     public String salaryDesc(Map<String,Object> map){
         //只看前4个记录,且按工资高低排序
         int offset = 0;
@@ -33,6 +60,19 @@ public class ExcellentStudentController {
                 excellentStudentService.queryAllByLimit( offset, limit);
         map.put("excelStu",studentList);
         return "excellentStudent";
+    }
+
+    @RequestMapping(value = "/salarydescjsonredis", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> excellentStudentJson(){
+        int offset = 0;
+        int limit = 4;
+        List<ExcellentStudent> studentList = excellentStudentService.queryAllByLimit( offset, limit);
+        if (null == studentList) {
+            return Restful.set(400, "find exc stu successfully" ,studentList);
+        } else {
+            return Restful.set(200, "find exc stu error", studentList);
+        }
     }
 
     /**
